@@ -139,12 +139,11 @@ class AspectTransform extends Transform {
         
         // For now just skip tests.
         println "Skip transform";
-        final DirectoryInput directoryInput = transformInvocation.inputs.first().directoryInputs.first()
-        final File input = directoryInput.file
-        FileMethods.copyDirectoryTo(input, outputDir, true)
-        return
+        final DirectoryInput directoryInput = transformInvocation.inputs.first().directoryInputs.first();
+        final File input = directoryInput.file;
+        FileMethods.copyDirectoryTo(input, outputDir, true);
+        
         /*
-
         aspectJWeaver.setAjSources(findAjSourcesForVariant(transformInvocation.context.variantName));
         aspectJWeaver.destinationDir = outputDir.absolutePath;
         aspectJWeaver.bootClasspath = config.bootClasspath.join(File.pathSeparator);
