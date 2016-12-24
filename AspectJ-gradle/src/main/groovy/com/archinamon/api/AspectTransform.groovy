@@ -111,7 +111,7 @@ class AspectTransform extends Transform {
 
     @Override
     boolean isIncremental() {
-        return true;
+        return false;
     }
 
     @Override //support of older gradle plugins
@@ -128,7 +128,7 @@ class AspectTransform extends Transform {
         TransformOutputProvider outputProvider = transformInvocation.outputProvider;
         List<String> includeJars = project.aspectj.includeJar;
         List<String> includeAspects = project.aspectj.includeAspectsFromJar;
-
+        
         if (!transformInvocation.incremental) {
             outputProvider.deleteAll();
         }
@@ -136,6 +136,15 @@ class AspectTransform extends Transform {
         final File outputDir = outputProvider.getContentLocation(TRANSFORM_NAME, outputTypes, scopes, Format.DIRECTORY);
         if (outputDir.isDirectory()) FileUtils.deleteDirectoryContents(outputDir);
         FileUtils.mkdirs(outputDir);
+        
+        // For now just skip tests.
+        if (transformInvocation.context.path.endsWith("Test")) {
+            println "Skip transform";
+            final DirectoryInput directoryInput = invocation.inputs.first().directoryInputs.first()
+            final File input = directoryInput.file
+            FileMethods.copyDirectoryTo(input, outputDir, true)
+            return
+        }
 
         aspectJWeaver.setAjSources(findAjSourcesForVariant(transformInvocation.context.variantName));
         aspectJWeaver.destinationDir = outputDir.absolutePath;
