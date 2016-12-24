@@ -137,20 +137,24 @@ class AspectTransform extends Transform {
         if (outputDir.isDirectory()) FileUtils.deleteDirectoryContents(outputDir);
         FileUtils.mkdirs(outputDir);
         
-        // For now just skip tests.
+        /*// For now just skip tests.
         println "Skip transform";
+        transformInvocation.referencedInputs.each { input ->
+            println "input directory : $input"
+        }
         final DirectoryInput directoryInput = transformInvocation.inputs.first().directoryInputs.first();
         final File input = directoryInput.file;
         FileMethods.copyDirectoryTo(input, outputDir, true);
+        */
         
-        /*
+        
         aspectJWeaver.setAjSources(findAjSourcesForVariant(transformInvocation.context.variantName));
         aspectJWeaver.destinationDir = outputDir.absolutePath;
         aspectJWeaver.bootClasspath = config.bootClasspath.join(File.pathSeparator);
 
         logAugmentationStart();
 
-        transformInvocation.referencedInputs.each { input ->
+        transformInvocation.inputs.each { input ->
             if (input.directoryInputs.empty && input.jarInputs.empty)
                 return; //if no inputs so nothing to proceed
 
@@ -178,7 +182,7 @@ class AspectTransform extends Transform {
         aspectJWeaver.doWeave();
         aspectJMerger.doMerge(outputProvider, outputDir);
 
-        logAugmentationFinish();*/
+        logAugmentationFinish();
     }
 
     /* Internal */
