@@ -111,7 +111,7 @@ class AspectTransform extends Transform {
 
     @Override
     boolean isIncremental() {
-        return false;
+        return true;
     }
 
     @Override //support of older gradle plugins
