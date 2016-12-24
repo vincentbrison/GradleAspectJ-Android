@@ -139,7 +139,7 @@ class AspectTransform extends Transform {
         
         // For now just skip tests.
         println "Skip transform";
-        final DirectoryInput directoryInput = invocation.inputs.first().directoryInputs.first()
+        final DirectoryInput directoryInput = transformInvocation.inputs.first().directoryInputs.first()
         final File input = directoryInput.file
         FileMethods.copyDirectoryTo(input, outputDir, true)
         return
