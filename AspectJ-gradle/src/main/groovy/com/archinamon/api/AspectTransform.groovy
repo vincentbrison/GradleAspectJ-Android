@@ -128,7 +128,7 @@ class AspectTransform extends Transform {
         TransformOutputProvider outputProvider = transformInvocation.outputProvider;
         List<String> includeJars = project.aspectj.includeJar;
         List<String> includeAspects = project.aspectj.includeAspectsFromJar;
-        
+
         if (!transformInvocation.incremental) {
             outputProvider.deleteAll();
         }
@@ -136,7 +136,7 @@ class AspectTransform extends Transform {
         final File outputDir = outputProvider.getContentLocation(TRANSFORM_NAME, outputTypes, scopes, Format.DIRECTORY);
         if (outputDir.isDirectory()) FileUtils.deleteDirectoryContents(outputDir);
         FileUtils.mkdirs(outputDir);
-        
+
         println "transform datas";
         transformInvocation.inputs.each { input ->
             println "input directory : $input"
@@ -149,8 +149,8 @@ class AspectTransform extends Transform {
         final File input = directoryInput.file;
         FileMethods.copyDirectoryTo(input, outputDir, true);
         */
-        
-        
+
+
         aspectJWeaver.setAjSources(findAjSourcesForVariant(transformInvocation.context.variantName));
         aspectJWeaver.destinationDir = outputDir.absolutePath;
         aspectJWeaver.bootClasspath = config.bootClasspath.join(File.pathSeparator);
@@ -183,8 +183,8 @@ class AspectTransform extends Transform {
         }
 
         aspectJWeaver.doWeave();
-        
-        //aspectJMerger.doMerge(outputProvider, outputDir);
+
+        aspectJMerger.doMerge(outputProvider, outputDir);
         //FileMethods.copyDirectoryTo(input, outputDir, true);
         logAugmentationFinish();
     }
