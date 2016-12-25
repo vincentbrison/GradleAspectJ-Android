@@ -137,26 +137,27 @@ class AspectTransform extends Transform {
         if (outputDir.isDirectory()) FileUtils.deleteDirectoryContents(outputDir);
         FileUtils.mkdirs(outputDir);
         
-        println "transform";
+        println "transform datas";
         transformInvocation.inputs.each { input ->
             println "input directory : $input"
         }
         transformInvocation.referencedInputs.each { input ->
             println "referencedInputs directory : $input"
         }
-        final DirectoryInput directoryInput = transformInvocation.inputs.first().directoryInputs.first();
+        println "outdir : $outputDir"
+        /*final DirectoryInput directoryInput = transformInvocation.inputs.first().directoryInputs.first();
         final File input = directoryInput.file;
         FileMethods.copyDirectoryTo(input, outputDir, true);
+        */
         
         
-        /*
         aspectJWeaver.setAjSources(findAjSourcesForVariant(transformInvocation.context.variantName));
         aspectJWeaver.destinationDir = outputDir.absolutePath;
         aspectJWeaver.bootClasspath = config.bootClasspath.join(File.pathSeparator);
 
         logAugmentationStart();
 
-        transformInvocation.inputs.each { input ->
+        transformInvocation.referencedInputs.each { input ->
             if (input.directoryInputs.empty && input.jarInputs.empty)
                 return; //if no inputs so nothing to proceed
 
@@ -182,9 +183,10 @@ class AspectTransform extends Transform {
         }
 
         aspectJWeaver.doWeave();
-        aspectJMerger.doMerge(outputProvider, outputDir);
-
-        logAugmentationFinish();*/
+        
+        //aspectJMerger.doMerge(outputProvider, outputDir);
+        //FileMethods.copyDirectoryTo(input, outputDir, true);
+        logAugmentationFinish();
     }
 
     /* Internal */
