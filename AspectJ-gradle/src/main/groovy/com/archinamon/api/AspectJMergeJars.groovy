@@ -32,10 +32,14 @@ public class AspectJMergeJars {
             FileUtils.deleteIfExists(jarFile);
 
             JarMerger jarMerger = new JarMerger(jarFile);
+            
+            println "jar file : $jarFile"
+            
             try {
                 jarMerger.setFilter(new ZipEntryFilter() {
                     @Override
                     boolean checkEntry(String archivePath) throws ZipAbortException {
+                        println "check filter on : $archivePath";
                         return archivePath.endsWith(SdkConstants.DOT_CLASS);
                     }
                 });
