@@ -137,10 +137,12 @@ class AspectTransform extends Transform {
         if (outputDir.isDirectory()) FileUtils.deleteDirectoryContents(outputDir);
         FileUtils.mkdirs(outputDir);
         
-        // For now just skip tests.
-        println "Skip transform";
+        println "transform";
         transformInvocation.inputs.each { input ->
             println "input directory : $input"
+        }
+        transformInvocation.referencedInputs.each { input ->
+            println "referencedInputs directory : $input"
         }
         final DirectoryInput directoryInput = transformInvocation.inputs.first().directoryInputs.first();
         final File input = directoryInput.file;
